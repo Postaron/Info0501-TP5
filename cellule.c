@@ -1,10 +1,11 @@
 #include "cellule.h"
 #include <stdlib.h>
-#include <string.h>
 
-void initialiserCellule(cellule_t ** cell, char * mot) {
-	(*cell)->succ = (*cell)->pred = NULL;
-	strcpy((*cell)->mot, mot);
+cellule_t * initialiserCellule(int value) {
+	cellule_t * cell = NULL;
+	cell = malloc(sizeof(cellule_t));
+	cell->succ = cell->pred = NULL;
+	return cell;
 }
 
 void detruireCellule(cellule_t ** dead) {

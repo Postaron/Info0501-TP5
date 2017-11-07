@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-void initialiserListe(liste_t * pliste) {
-	pliste->tete = NULL;
+liste_t * initialiserListe() {
+	liste_t * liste = NULL;
+	liste = malloc(sizeof(liste_t));
+	liste->tete = NULL;
+	return liste;
 }
 
 void inserer(liste_t * pliste, cellule_t * pcell) {
@@ -18,10 +21,10 @@ void inserer(liste_t * pliste, cellule_t * pcell) {
 	}
 }
 
-cellule_t * rechercher(liste_t * pliste, char * mot) {
+cellule_t * rechercher(liste_t * pliste, int value) {
 	cellule_t * pcell = NULL;
 	pcell = pliste->tete;
-	while (strcmp(mot, pcell->mot) != 0) {
+	while (strcmp(value, pcell->value) != 0) {
 		if (pcell->succ != NULL) {
 			pcell = pcell->succ;
 		} else
