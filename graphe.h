@@ -7,14 +7,15 @@ typedef struct {
 	int oriente; //oriente : 1 ; sinon 0
 	int value; //évalué : 1 ; sinon 0
 	int complet; //complet : 1 ; sinon 0
-	liste_t * adj; //Tableau de liste adjacence
+	liste_t ** adj; //Pointeur de tableau de pointeur de liste_t :D
+	int ** matrice_adj; //Matrice adjacence, toujours carrée
 } graphe_t;
 
-void creerListesAdjacences();
-void afficherListesAdjaceces(graphe_t * graph);
-void creerMatriceAdjacences();
+void creerListesAdjacences(graphe_t * grapĥ);
+void afficherListesAdjacences(graphe_t * graph);
+void creerMatriceAdjacences(graphe_t * grapĥ);
 void afficherMatriceAdjacences(graphe_t * graph);
-graphe_t * creerGraphe();
+graphe_t * creerGraphe(int choice); // choice = 1 : liste ; matrice
 void detruireGraphe(graphe_t * graph);
 
 #endif /* GRAPHE_H_ */
