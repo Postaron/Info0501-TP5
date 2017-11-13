@@ -2,8 +2,8 @@
 #define FILE_H_
 
 typedef struct file {
-	int front, rear, size;
-	unsigned int capacity;
+	int front, rear;
+	unsigned int size, capacity;
 	int * array;
 } file_t;
 

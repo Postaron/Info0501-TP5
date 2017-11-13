@@ -34,7 +34,7 @@ void enfile(file_t * queue, int item) {
 }
 
 int defile(file_t * queue) {
-	if (isEmpty(queue))
+	if (file_isEmpty(queue))
 		return INT_MIN;
 	int item = queue->array[queue->front];
 	queue->front = (queue->front + 1) % queue->capacity;
