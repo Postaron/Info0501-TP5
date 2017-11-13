@@ -11,9 +11,11 @@ typedef struct {
 	int ** matrice_adj; //Matrice adjacence, toujours carrée
 } graphe_t;
 
-void creerListesAdjacences(graphe_t * grapĥ);
+//Valide
+void creerListesAdjacences(graphe_t * graph);
+//Valide
 void afficherListesAdjacences(graphe_t * graph);
-void creerMatriceAdjacences(graphe_t * grapĥ);
+void creerMatriceAdjacences(graphe_t * graph);
 void afficherMatriceAdjacences(graphe_t * graph);
 graphe_t * creerGraphe(int choice); // choice = 1 : liste ; matrice
 void detruireGraphe(graphe_t * graph);

@@ -8,9 +8,9 @@ DEBUG=
 EXEC=graphe
 
 ifeq ($(DEBUG), yes)
-	CFLAGS +=-g3
+	CFLAGS += -g3
 else
-	CFLAGS +=-O3
+	CFLAGS += -O3
 endif
 
 all: $(EXEC)

@@ -5,6 +5,7 @@ cellule_t * initialiserCellule(int value) {
 	cellule_t * cell = NULL;
 	cell = malloc(sizeof(cellule_t));
 	cell->succ = cell->pred = NULL;
+	cell->value = value;
 	return cell;
 }
 

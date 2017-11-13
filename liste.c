@@ -1,6 +1,7 @@
 #include "liste.h"
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 liste_t * initialiserListe() {
 	liste_t * liste = NULL;
@@ -24,7 +25,7 @@ void inserer(liste_t * pliste, cellule_t * pcell) {
 cellule_t * rechercher(liste_t * pliste, int value) {
 	cellule_t * pcell = NULL;
 	pcell = pliste->tete;
-	while (strcmp(value, pcell->value) != 0) {
+	while (value != pcell->value) {
 		if (pcell->succ != NULL) {
 			pcell = pcell->succ;
 		} else
@@ -64,7 +65,7 @@ void detruireListe(liste_t * pliste) {
 		while (ptemp != NULL) {
 			pdel = ptemp;
 			ptemp = ptemp->succ;
-			//free(pdel); //Attention, fonctionne seulement si cellule alloué dynamiquement
+			free(pdel); //Attention, fonctionne seulement si cellule alloué dynamiquement
 		}
 	}
 }
