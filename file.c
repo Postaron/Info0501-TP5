@@ -2,30 +2,35 @@
 #include <stdlib.h>
 #include <limits.h>
 
-file_t * creerFile(unsigned int capacite) {
-	file_t * queue = (file_t *) malloc(sizeof(file_t));
+file_t *creerFile(unsigned int capacite)
+{
+	file_t *queue = (file_t *)malloc(sizeof(file_t));
 	queue->capacity = capacite;
 	queue->front = queue->size = 0;
 	queue->rear = capacite - 1;
-	queue->array = (int *) malloc(queue->capacity * sizeof(int));
+	queue->array = (liste_t **)malloc(queue->capacity * sizeof(liste_t *));
 	return queue;
 }
 
-void detruireFile(file_t * queue) {
+void detruireFile(file_t *queue)
+{
 	free(queue->array);
 	free(queue);
 	queue = NULL;
 }
 
-int file_isFull(file_t * queue) {
+int file_isFull(file_t *queue)
+{
 	return (queue->size == queue->capacity);
 }
 
-int file_isEmpty(file_t * queue) {
+int file_isEmpty(file_t *queue)
+{
 	return (queue->size == 0);
 }
 
-void enfile(file_t * queue, int item) {
+void enfile(file_t *queue, liste_t *item)
+{
 	if (file_isFull(queue))
 		return;
 	queue->rear = (queue->rear + 1) % queue->capacity;
@@ -33,23 +38,26 @@ void enfile(file_t * queue, int item) {
 	queue->size = queue->size + 1;
 }
 
-int defile(file_t * queue) {
+liste_t *defile(file_t *queue)
+{
 	if (file_isEmpty(queue))
-		return INT_MIN;
-	int item = queue->array[queue->front];
+		return NULL;
+	liste_t *item = queue->array[queue->front];
 	queue->front = (queue->front + 1) % queue->capacity;
 	queue->size = queue->size - 1;
 	return item;
 }
 
-int front(file_t * queue) {
+liste_t *front(file_t *queue)
+{
 	if (file_isEmpty(queue))
-		return INT_MIN;
+		return NULL;
 	return queue->array[queue->front];
 }
 
-int rear(file_t * queue) {
+liste_t *rear(file_t *queue)
+{
 	if (file_isEmpty(queue))
-		return INT_MIN;
+		return NULL;
 	return queue->array[queue->rear];
 }
