@@ -5,8 +5,7 @@
 
 typedef struct file
 {
-	int front, rear;
-	unsigned int size, capacity;
+	int front, rear, size, capacity;
 	liste_t **array;
 } file_t;
 

@@ -1,9 +1,6 @@
 #ifndef GRAPHE_H_
 #define GRAPHE_H_
 #include "liste.h"
-#define BLANC 0x01
-#define GRIS 0x02
-#define NOIR 0x03
 
 typedef struct
 {
@@ -14,6 +11,12 @@ typedef struct
 	liste_t **adj;	 //Pointeur de tableau de pointeur de liste_t :D
 	int **matrice_adj; //Matrice adjacence, toujours carrée
 } graphe_t;
+
+typedef enum {
+	blanc,
+	gris,
+	noir
+} couleur_t;
 
 //Valide
 void creerListesAdjacences(graphe_t *graph);

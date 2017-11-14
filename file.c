@@ -35,7 +35,7 @@ void enfile(file_t *queue, liste_t *item)
 		return;
 	queue->rear = (queue->rear + 1) % queue->capacity;
 	queue->array[queue->rear] = item;
-	queue->size = queue->size + 1;
+	++(queue->size);
 }
 
 liste_t *defile(file_t *queue)
@@ -44,7 +44,7 @@ liste_t *defile(file_t *queue)
 		return NULL;
 	liste_t *item = queue->array[queue->front];
 	queue->front = (queue->front + 1) % queue->capacity;
-	queue->size = queue->size - 1;
+	--(queue->size);
 	return item;
 }
 

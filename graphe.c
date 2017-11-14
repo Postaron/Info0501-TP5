@@ -185,17 +185,17 @@ void detruireGraphe(graphe_t *graph)
 
 void parcoursLargeur(graphe_t *graph)
 {
-	int couleur[graph->nSommets];
+	couleur_t couleur[graph->nSommets];
 	int distance[graph->nSommets];
 	liste_t *pere[graph->nSommets];
-	file_t *queue = creerFile(12);
+	file_t *queue = creerFile(graph->nSommets);
 	for (int i = 0; i < graph->nSommets; ++i)
 	{
-		couleur[i] = BLANC;
+		couleur[i] = blanc;
 		distance[i] = INT_MAX;
 		pere[i] = NULL;
 	}
-	couleur[0] = GRIS;
+	couleur[0] = gris;
 	distance[0] = 0;
 	pere[0] = NULL;
 	enfile(queue, graph->adj[0]);
@@ -205,15 +205,16 @@ void parcoursLargeur(graphe_t *graph)
 		cellule_t *cell;
 		for (cell = u->tete; cell != NULL; cell = cell->succ)
 		{
-			if (couleur[cell->value] == BLANC)
+			if (couleur[cell->value] == blanc)
 			{
-				couleur[cell->value] = GRIS;
+				couleur[cell->value] = gris;
 				distance[cell->value] = distance[u->tete->value] + 1;
 				pere[cell->value] = u;
 				enfile(queue, graph->adj[cell->value]);
 				defile(queue);
 			}
 		}
-		couleur[u->tete->value] = NOIR;
+		couleur[u->tete->value] = noir;
 	}
+	detruireFile(queue);
 }
