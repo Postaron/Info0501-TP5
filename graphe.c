@@ -10,7 +10,7 @@
 void creerListesAdjacences(graphe_t *graph)
 {
 	FILE *file = NULL;
-	int indice = 0, donnee = 0, flag = 0;
+	int indice = 0, donnee = 0;
 	char buffer[27]; // buffer suffisamment grand
 	file = fopen("graphe1.txt", "r");
 	if (file == NULL)
@@ -182,7 +182,7 @@ void detruireGraphe(graphe_t *graph)
 	free(graph);
 }
 
-void parcoursLargeur(graphe_t *graph)
+void parcoursLargeur(graphe_t *graph, int sommetOrigine)
 {
 	/**
 	 * Implémentation avec les indices : faite.
@@ -198,10 +198,10 @@ void parcoursLargeur(graphe_t *graph)
 		distance[i] = INT_MAX;
 		pere[i] = INT_MAX;
 	}
-	couleur[0] = gris;
-	distance[0] = 0;
-	pere[0] = 0;
-	enfile(queue, graph->adj[0]->tete->value);
+	couleur[sommetOrigine] = gris;
+	distance[sommetOrigine] = 0;
+	pere[sommetOrigine] = -1;
+	enfile(queue, graph->adj[sommetOrigine]->tete->value);
 	while (!file_isEmpty(queue))
 	{
 		u = front(queue);
@@ -213,9 +213,9 @@ void parcoursLargeur(graphe_t *graph)
 				distance[cell->value] = distance[u] + 1;
 				pere[cell->value] = u;
 				enfile(queue, cell->value);
-				defile(queue);
 			}
 		}
+		defile(queue);
 		couleur[u] = noir;
 	}
 	detruireFile(queue);

@@ -26,6 +26,6 @@ void creerMatriceAdjacences(graphe_t *graph);
 void afficherMatriceAdjacences(graphe_t *graph);
 graphe_t *creerGraphe(int choice); // choice = 1 : liste ; matrice
 void detruireGraphe(graphe_t *graph);
-void parcoursLargeur(graphe_t *graph);
+void parcoursLargeur(graphe_t *graph, int sommetOrigine);
 
 #endif /* GRAPHE_H_ */
