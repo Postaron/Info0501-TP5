@@ -186,37 +186,37 @@ void parcoursLargeur(graphe_t *graph, int sommetOrigine)
 {
 	/**
 	 * Implémentation avec les indices : faite.
-	 * Succès : aucun, boucle infinie toujours présente.
+	 * Succès : réussis, mauvais placement du defile, bravo le livre !
 	*/
-	couleur_t couleur[graph->nSommets];
-	int distance[graph->nSommets], pere[graph->nSommets], u;
+	sommet_t sommet[graph->nSommets];
+	int u, i;
 	file_t *queue = creerFile(graph->nSommets);
 	cellule_t *cell = NULL;
-	for (int i = 0; i < graph->nSommets; ++i)
+	for (i = 0; i < graph->nSommets; ++i)
 	{
-		couleur[i] = blanc;
-		distance[i] = INT_MAX;
-		pere[i] = INT_MAX;
+		sommet[i].couleur = blanc;
+		sommet[i].distance = INT_MAX;
+		sommet[i].pere = NULL;
 	}
-	couleur[sommetOrigine] = gris;
-	distance[sommetOrigine] = 0;
-	pere[sommetOrigine] = -1;
+	sommet[sommetOrigine].couleur = gris;
+	sommet[sommetOrigine].distance = 0;
+	sommet[sommetOrigine].pere = NULL;
 	enfile(queue, graph->adj[sommetOrigine]->tete->value);
 	while (!file_isEmpty(queue))
 	{
 		u = front(queue);
 		for (cell = graph->adj[u]->tete; cell != NULL; cell = cell->succ)
 		{
-			if (couleur[cell->value] == blanc)
+			if (sommet[cell->value].couleur == blanc)
 			{
-				couleur[cell->value] = gris;
-				distance[cell->value] = distance[u] + 1;
-				pere[cell->value] = u;
+				sommet[cell->value].couleur = gris;
+				sommet[cell->value].distance = sommet[u].distance + 1;
+				sommet[cell->value].pere = &(sommet[u]);
 				enfile(queue, cell->value);
 			}
 		}
+		sommet[u].couleur = noir;
 		defile(queue);
-		couleur[u] = noir;
 	}
 	detruireFile(queue);
 }

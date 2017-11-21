@@ -18,6 +18,13 @@ typedef enum {
 	noir
 } couleur_t;
 
+typedef struct sommet_type
+{
+	couleur_t couleur;
+	int distance;
+	struct sommet_type *pere;
+} sommet_t;
+
 //Valide
 void creerListesAdjacences(graphe_t *graph);
 //Valide
