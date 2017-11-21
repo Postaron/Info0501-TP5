@@ -4,11 +4,9 @@
 
 int main(void)
 {
-	graphe_t *graphe = creerGraphe(0), *graphe2 = creerGraphe(1);
+	graphe_t *graphe2 = creerGraphe(1);
 	afficherListesAdjacences(graphe2);
 	parcoursLargeur(graphe2);
-	afficherMatriceAdjacences(graphe);
-	detruireGraphe(graphe);
 	detruireGraphe(graphe2);
 	return EXIT_SUCCESS;
 }

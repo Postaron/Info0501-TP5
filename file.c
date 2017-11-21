@@ -8,7 +8,7 @@ file_t *creerFile(unsigned int capacite)
 	queue->capacity = capacite;
 	queue->front = queue->size = 0;
 	queue->rear = capacite - 1;
-	queue->array = (cellule_t **)malloc(queue->capacity * sizeof(cellule_t *));
+	queue->array = (int *)malloc(queue->capacity * sizeof(int ));
 	return queue;
 }
 
@@ -29,7 +29,7 @@ int file_isEmpty(file_t *queue)
 	return (queue->size == 0);
 }
 
-void enfile(file_t *queue, cellule_t *item)
+void enfile(file_t *queue, int item)
 {
 	if (file_isFull(queue))
 		return;
@@ -38,26 +38,26 @@ void enfile(file_t *queue, cellule_t *item)
 	++(queue->size);
 }
 
-cellule_t *defile(file_t *queue)
+int defile(file_t *queue)
 {
 	if (file_isEmpty(queue))
-		return NULL;
-	cellule_t *item = queue->array[queue->front];
+		return INT_MAX;
+	int item = queue->array[queue->front];
 	queue->front = (queue->front + 1) % queue->capacity;
 	--(queue->size);
 	return item;
 }
 
-cellule_t *front(file_t *queue)
+int front(file_t *queue)
 {
 	if (file_isEmpty(queue))
-		return NULL;
+		return INT_MAX;
 	return queue->array[queue->front];
 }
 
-cellule_t *rear(file_t *queue)
+int rear(file_t *queue)
 {
 	if (file_isEmpty(queue))
-		return NULL;
+		return INT_MAX;
 	return queue->array[queue->rear];
 }

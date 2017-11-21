@@ -10,7 +10,7 @@
 void creerListesAdjacences(graphe_t *graph)
 {
 	FILE *file = NULL;
-	int indice = 0, donnee = 0;
+	int indice = 0, donnee = 0, flag = 0;
 	char buffer[27]; // buffer suffisamment grand
 	file = fopen("graphe1.txt", "r");
 	if (file == NULL)
@@ -24,8 +24,7 @@ void creerListesAdjacences(graphe_t *graph)
 		if (strcmp(buffer, "nSommets") == 0)
 		{
 			fscanf(file, "%d", &graph->nSommets);
-			graph->adj = (liste_t **)malloc(
-				graph->nSommets * sizeof(liste_t *));
+			graph->adj = (liste_t **)malloc(graph->nSommets * sizeof(liste_t *));
 			//Créer tableau de listes adjacences
 			for (int i = 0; i < graph->nSommets; ++i)
 			{
@@ -51,10 +50,10 @@ void creerListesAdjacences(graphe_t *graph)
 				indice = atoi(buffer);
 				fscanf(file, "%s", buffer);
 				donnee = atoi(buffer);
-				inserer(&graph->adj[indice][0], initialiserCellule(donnee));
+				inserer(graph->adj[indice], initialiserCellule(donnee));
 				if (!graph->oriente)
 				{
-					inserer(&graph->adj[donnee][0], initialiserCellule(indice));
+					inserer(graph->adj[donnee], initialiserCellule(indice));
 				}
 			}
 		}
@@ -185,36 +184,39 @@ void detruireGraphe(graphe_t *graph)
 
 void parcoursLargeur(graphe_t *graph)
 {
+	/**
+	 * Implémentation avec les indices : faite.
+	 * Succès : aucun, boucle infinie toujours présente.
+	*/
 	couleur_t couleur[graph->nSommets];
-	int distance[graph->nSommets];
-	liste_t *pere[graph->nSommets];
+	int distance[graph->nSommets], pere[graph->nSommets], u;
 	file_t *queue = creerFile(graph->nSommets);
+	cellule_t *cell = NULL;
 	for (int i = 0; i < graph->nSommets; ++i)
 	{
 		couleur[i] = blanc;
 		distance[i] = INT_MAX;
-		pere[i] = NULL;
+		pere[i] = INT_MAX;
 	}
 	couleur[0] = gris;
 	distance[0] = 0;
-	pere[0] = NULL;
-	enfile(queue, graph->adj[0]);
+	pere[0] = 0;
+	enfile(queue, graph->adj[0]->tete->value);
 	while (!file_isEmpty(queue))
 	{
-		liste_t *u = front(queue);
-		cellule_t *cell;
-		for (cell = u->tete; cell != NULL; cell = cell->succ)
+		u = front(queue);
+		for (cell = graph->adj[u]->tete; cell != NULL; cell = cell->succ)
 		{
 			if (couleur[cell->value] == blanc)
 			{
 				couleur[cell->value] = gris;
-				distance[cell->value] = distance[u->tete->value] + 1;
+				distance[cell->value] = distance[u] + 1;
 				pere[cell->value] = u;
-				enfile(queue, graph->adj[cell->value]);
+				enfile(queue, cell->value);
 				defile(queue);
 			}
 		}
-		couleur[u->tete->value] = noir;
+		couleur[u] = noir;
 	}
 	detruireFile(queue);
 }
