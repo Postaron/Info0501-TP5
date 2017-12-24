@@ -7,12 +7,12 @@
 #include "outilsListe.h"
 #include "file.h"
 
-void creerListesAdjacences(graphe_t *graph)
+void creerListesAdjacences(graphe_t *graph, char *fileName)
 {
 	FILE *file = NULL;
 	int indice = 0, donnee = 0;
 	char buffer[27]; // buffer suffisamment grand
-	file = fopen("graphe1.txt", "r");
+	file = fopen(fileName, "r");
 	if (file == NULL)
 	{
 		fprintf(stderr, "Ouverture du fichier impossible\n");
@@ -24,7 +24,8 @@ void creerListesAdjacences(graphe_t *graph)
 		if (strcmp(buffer, "nSommets") == 0)
 		{
 			fscanf(file, "%d", &graph->nSommets);
-			graph->adj = (liste_t **)malloc(graph->nSommets * sizeof(liste_t *));
+			graph->adj = (liste_t **) malloc(
+					graph->nSommets * sizeof(liste_t *));
 			//Créer tableau de listes adjacences
 			for (int i = 0; i < graph->nSommets; ++i)
 			{
@@ -45,7 +46,8 @@ void creerListesAdjacences(graphe_t *graph)
 		}
 		else if (strcmp(buffer, "debutDefAretes") == 0)
 		{
-			while (fscanf(file, "%s", buffer), strcmp(buffer, "finDefAretes") != 0)
+			while (fscanf(file, "%s", buffer), strcmp(buffer, "finDefAretes")
+					!= 0)
 			{
 				indice = atoi(buffer);
 				fscanf(file, "%s", buffer);
@@ -72,12 +74,12 @@ void afficherListesAdjacences(graphe_t *graph)
 	}
 }
 
-void creerMatriceAdjacences(graphe_t *graph)
+void creerMatriceAdjacences(graphe_t *graph, char *fileName)
 {
 	FILE *file = NULL;
 	int indice = 0, donnee = 0;
 	char buffer[27]; //suffisamment grand
-	file = fopen("graphe1.txt", "r");
+	file = fopen(fileName, "r");
 	if (file == NULL)
 	{
 		fprintf(stderr, "Ouverture du fichier impossible\n");
@@ -88,13 +90,13 @@ void creerMatriceAdjacences(graphe_t *graph)
 		if (strcmp(buffer, "nSommets") == 0)
 		{
 			fscanf(file, "%d", &graph->nSommets);
-			graph->matrice_adj = (int **)malloc(
-				sizeof(int *) * graph->nSommets);
+			graph->matrice_adj = (int **) malloc(
+					sizeof(int *) * graph->nSommets);
 			//Créer tableau de listes adjacences
 			for (int i = 0; i < graph->nSommets; ++i)
 			{
-				graph->matrice_adj[i] = (int *)malloc(
-					sizeof(int) * graph->nSommets);
+				graph->matrice_adj[i] = (int *) malloc(
+						sizeof(int) * graph->nSommets);
 			}
 			for (int i = 0; i < graph->nSommets; ++i)
 			{
@@ -118,7 +120,8 @@ void creerMatriceAdjacences(graphe_t *graph)
 		}
 		else if (strcmp(buffer, "debutDefAretes") == 0)
 		{
-			while (fscanf(file, "%s", buffer), strcmp(buffer, "finDefAretes") != 0)
+			while (fscanf(file, "%s", buffer), strcmp(buffer, "finDefAretes")
+					!= 0)
 			{
 				indice = atoi(buffer);
 				fscanf(file, "%s", buffer);
@@ -145,17 +148,17 @@ void afficherMatriceAdjacences(graphe_t *graph)
 	}
 }
 
-graphe_t *creerGraphe(int choice)
+graphe_t *creerGraphe(int choice, char *fileName)
 { // choice = 1 : liste ; matrice
 	graphe_t *graph = NULL;
 	graph = malloc(sizeof(graphe_t));
 	if (choice)
 	{
-		creerListesAdjacences(graph);
+		creerListesAdjacences(graph, fileName);
 	}
 	else
 	{
-		creerMatriceAdjacences(graph);
+		creerMatriceAdjacences(graph, fileName);
 	}
 	return graph;
 }
@@ -180,43 +183,4 @@ void detruireGraphe(graphe_t *graph)
 		graph->matrice_adj = NULL;
 	}
 	free(graph);
-}
-
-void parcoursLargeur(graphe_t *graph, int sommetOrigine)
-{
-	/**
-	 * Implémentation avec les indices : faite.
-	 * Succès : réussis, mauvais placement du defile, bravo le livre !
-	*/
-	sommet_t sommet[graph->nSommets];
-	int u, i;
-	file_t *queue = creerFile(graph->nSommets);
-	cellule_t *cell = NULL;
-	for (i = 0; i < graph->nSommets; ++i)
-	{
-		sommet[i].couleur = blanc;
-		sommet[i].distance = INT_MAX;
-		sommet[i].pere = NULL;
-	}
-	sommet[sommetOrigine].couleur = gris;
-	sommet[sommetOrigine].distance = 0;
-	sommet[sommetOrigine].pere = NULL;
-	enfile(queue, graph->adj[sommetOrigine]->tete->value);
-	while (!file_isEmpty(queue))
-	{
-		u = front(queue);
-		for (cell = graph->adj[u]->tete; cell != NULL; cell = cell->succ)
-		{
-			if (sommet[cell->value].couleur == blanc)
-			{
-				sommet[cell->value].couleur = gris;
-				sommet[cell->value].distance = sommet[u].distance + 1;
-				sommet[cell->value].pere = &(sommet[u]);
-				enfile(queue, cell->value);
-			}
-		}
-		sommet[u].couleur = noir;
-		defile(queue);
-	}
-	detruireFile(queue);
 }

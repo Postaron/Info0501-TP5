@@ -1,13 +1,13 @@
 #include "liste.h"
+
 #include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 
 liste_t *initialiserListe()
 {
 	liste_t *liste = NULL;
 	liste = malloc(sizeof(liste_t));
 	liste->tete = NULL;
+	liste->queue = NULL;
 	return liste;
 }
 
@@ -23,7 +23,7 @@ void inserer(liste_t *pliste, cellule_t *pcell)
 	else
 	{
 		pcell->succ = pcell->pred = NULL;
-		pliste->tete = pcell;
+		pliste->queue = pliste->tete = pcell;
 	}
 }
 
@@ -31,7 +31,7 @@ cellule_t *rechercher(liste_t *pliste, int value)
 {
 	cellule_t *pcell = NULL;
 	pcell = pliste->tete;
-	while (value != pcell->value)
+	while (value != pcell->noeud)
 	{
 		if (pcell->succ != NULL)
 		{
@@ -52,24 +52,24 @@ void supprimer(liste_t *pliste, cellule_t *pcell)
 		ptemp = ptemp->succ;
 	}
 	if (ptemp->succ == NULL && ptemp->pred != NULL)
-	{ //En fin de liste
+	{ /*En fin de liste*/
 		ptemp->pred->succ = NULL;
 		free(ptemp);
 	}
 	else if (ptemp->pred == NULL && ptemp->succ != NULL)
-	{ //Tête de liste
+	{ /*Tête de liste*/
 		pliste->tete = ptemp->succ;
 		ptemp->succ->pred = NULL;
 		free(ptemp);
 	}
 	else if (ptemp->succ != NULL && ptemp->pred != NULL)
-	{ //Dans liste
+	{ /*Dans liste*/
 		ptemp->pred->succ = ptemp->succ;
 		ptemp->succ->pred = ptemp->pred;
 		free(ptemp);
 	}
 	else
-	{ // Si seul
+	{ /* Si seul*/
 		pliste->tete = NULL;
 		free(ptemp);
 	}
@@ -77,7 +77,7 @@ void supprimer(liste_t *pliste, cellule_t *pcell)
 
 void detruireListe(liste_t *pliste)
 {
-	//Pointeurs pour parcourir la liste et mémoriser "celui à détruire"
+	/* Pointeurs pour parcourir la liste et mémoriser "celui à détruire" */
 	cellule_t *ptemp = NULL, *pdel = NULL;
 	if (pliste != NULL)
 	{
@@ -86,7 +86,7 @@ void detruireListe(liste_t *pliste)
 		{
 			pdel = ptemp;
 			ptemp = ptemp->succ;
-			free(pdel); //Attention, fonctionne seulement si cellule alloué dynamiquement
+			free(pdel);
 		}
 	}
 }

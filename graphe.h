@@ -12,27 +12,13 @@ typedef struct
 	int **matrice_adj; //Matrice adjacence, toujours carrée
 } graphe_t;
 
-typedef enum {
-	blanc,
-	gris,
-	noir
-} couleur_t;
-
-typedef struct sommet_type
-{
-	couleur_t couleur;
-	int distance;
-	struct sommet_type *pere;
-} sommet_t;
-
 //Valide
-void creerListesAdjacences(graphe_t *graph);
+void creerListesAdjacences(graphe_t *graph, char *fileName);
 //Valide
 void afficherListesAdjacences(graphe_t *graph);
-void creerMatriceAdjacences(graphe_t *graph);
+void creerMatriceAdjacences(graphe_t *graph, char *fileName);
 void afficherMatriceAdjacences(graphe_t *graph);
-graphe_t *creerGraphe(int choice); // choice = 1 : liste ; matrice
+graphe_t *creerGraphe(int choice, char *fileName); // choice = 1 : liste ; matrice
 void detruireGraphe(graphe_t *graph);
-void parcoursLargeur(graphe_t *graph, int sommetOrigine);
 
 #endif /* GRAPHE_H_ */
