@@ -151,7 +151,7 @@ void afficherMatriceAdjacences(graphe_t *graph)
 graphe_t *creerGraphe(int choice, char *fileName)
 { // choice = 1 : liste ; matrice
 	graphe_t *graph = NULL;
-	graph = malloc(sizeof(graphe_t));
+	graph = (graphe_t*) malloc(sizeof(graphe_t));
 	if (choice)
 	{
 		creerListesAdjacences(graph, fileName);
