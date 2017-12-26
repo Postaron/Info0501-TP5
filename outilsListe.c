@@ -8,7 +8,7 @@ void afficherListe(liste_t *pliste)
 	ptemp = pliste->tete;
 	while (ptemp != NULL)
 	{
-		printf("noeud : (%d), poids : (%d) --> ", ptemp->noeud, ptemp->poids);
+		printf("noeud : (%d) --> ", ptemp->noeud);
 		if (ptemp->succ != NULL)
 		{
 			ptemp = ptemp->succ;

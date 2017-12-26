@@ -148,18 +148,12 @@ void afficherMatriceAdjacences(graphe_t *graph)
 	}
 }
 
-graphe_t *creerGraphe(int choice, char *fileName)
+graphe_t *creerGraphe(char *fileName)
 { // choice = 1 : liste ; matrice
 	graphe_t *graph = NULL;
 	graph = (graphe_t*) malloc(sizeof(graphe_t));
-	if (choice)
-	{
-		creerListesAdjacences(graph, fileName);
-	}
-	else
-	{
-		creerMatriceAdjacences(graph, fileName);
-	}
+	creerListesAdjacences(graph, fileName);
+	creerMatriceAdjacences(graph, fileName);
 	return graph;
 }
 
@@ -172,8 +166,9 @@ void detruireGraphe(graphe_t *graph)
 			detruireListe(&graph->adj[i][0]);
 		}
 		free(graph->adj);
+		graph->adj = NULL;
 	}
-	else if (graph->matrice_adj != NULL)
+	if (graph->matrice_adj != NULL)
 	{
 		for (int i = 0; i < graph->nSommets; ++i)
 		{
