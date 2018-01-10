@@ -1,11 +1,11 @@
+#include "graphe.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
-#include "graphe.h"
+
 #include "cellule.h"
 #include "outilsListe.h"
-#include "file.h"
 
 void creerListesAdjacences(graphe_t *graph, char *fileName)
 {
